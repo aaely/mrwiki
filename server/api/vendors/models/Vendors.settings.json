@@ -1,0 +1,29 @@
+{
+  "connection": "default",
+  "collectionName": "vendors",
+  "info": {
+    "name": "vendors",
+    "description": "Ex: MGT, ATI, Agyilysys"
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "default": "",
+      "type": "string"
+    },
+    "applications": {
+      "collection": "application",
+      "via": "vendors"
+    },
+    "phone": {
+      "default": "",
+      "type": "string"
+    },
+    "email": {
+      "default": "",
+      "type": "email"
+    }
+  }
+}
