@@ -30,13 +30,13 @@ class Navbar extends Component {
                     />
                     </Box>
                     <Heading size="xs" color="orange">
-                        Ecommerce
+                        M Resort Wiki
                     </Heading>
                 </Box>                    
                 </NavLink>
 
                 <NavLink to="/signup" activeClassName="active">
-                <Text size="xl" color="white">Sign Up</Text>
+                <Text size="xl" color="white">Sign Out</Text>
                 </NavLink>
 
             </Box>

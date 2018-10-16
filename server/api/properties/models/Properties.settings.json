@@ -15,8 +15,7 @@
     },
     "applications": {
       "collection": "application",
-      "via": "properties",
-      "dominant": true
+      "via": "properties"
     }
   }
 }

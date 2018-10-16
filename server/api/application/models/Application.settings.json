@@ -1,6 +1,6 @@
 {
   "connection": "default",
-  "collectionName": "",
+  "collectionName": "application",
   "info": {
     "name": "application",
     "description": "Super Playmate, Pit Watch, CashClub, LMS"
@@ -26,7 +26,8 @@
     },
     "properties": {
       "collection": "properties",
-      "via": "applications"
+      "via": "applications",
+      "dominant": true
     }
   }
 }
