@@ -44,7 +44,7 @@ class Dashboard extends Component {
         <Box>
             {applications.map(app => {
                 return(
-                    <Box>
+                    <Box marginTop={5} marginBotom={5}>
                         {app.name} <br />
                         {app.vendors.name} <br />
                     </Box>

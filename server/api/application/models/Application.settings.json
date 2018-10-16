@@ -23,6 +23,10 @@
       "via": "related",
       "plugin": "upload",
       "required": false
+    },
+    "properties": {
+      "collection": "properties",
+      "via": "applications"
     }
   }
 }

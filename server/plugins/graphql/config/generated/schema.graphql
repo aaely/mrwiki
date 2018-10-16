@@ -6,6 +6,7 @@ type Application {
   name: String!
   vendors: Vendors
   icon: UploadFile
+  properties(sort: String, limit: Int, start: Int, where: JSON): [Properties]
 }
 
 type ApplicationAggregator {
@@ -61,6 +62,7 @@ input ApplicationInput {
   name: String!
   vendors: ID
   icon: ID
+  properties: [ID]
 }
 
 input createApplicationInput {
@@ -69,6 +71,14 @@ input createApplicationInput {
 
 type createApplicationPayload {
   application: Application
+}
+
+input createPropertiesInput {
+  data: PropertiesInput
+}
+
+type createPropertiesPayload {
+  property: Properties
 }
 
 input createRoleInput {
@@ -106,6 +116,14 @@ input deleteApplicationInput {
 
 type deleteApplicationPayload {
   application: Application
+}
+
+input deletePropertiesInput {
+  where: InputID
+}
+
+type deletePropertiesPayload {
+  property: Properties
 }
 
 input deleteRoleInput {
@@ -153,12 +171,15 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-union Morph = Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | Properties | createPropertiesPayload | updatePropertiesPayload | deletePropertiesPayload | PropertiesConnection | PropertiesAggregator | PropertiesGroupBy | PropertiesConnection_id | PropertiesConnectionCreatedAt | PropertiesConnectionUpdatedAt | PropertiesConnectionName | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createApplication(input: createApplicationInput): createApplicationPayload
   updateApplication(input: updateApplicationInput): updateApplicationPayload
   deleteApplication(input: deleteApplicationInput): deleteApplicationPayload
+  createProperties(input: createPropertiesInput): createPropertiesPayload
+  updateProperties(input: updatePropertiesInput): updatePropertiesPayload
+  deleteProperties(input: deletePropertiesInput): deletePropertiesPayload
   createVendors(input: createVendorsInput): createVendorsPayload
   updateVendors(input: updateVendorsInput): updateVendorsPayload
   deleteVendors(input: deleteVendorsInput): deleteVendorsPayload
@@ -177,10 +198,63 @@ type Mutation {
   upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
 }
 
+type Properties {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  applications(sort: String, limit: Int, start: Int, where: JSON): [Application]
+}
+
+type PropertiesAggregator {
+  count: Int
+}
+
+type PropertiesConnection {
+  values: [Properties]
+  groupBy: PropertiesGroupBy
+  aggregate: PropertiesAggregator
+}
+
+type PropertiesConnection_id {
+  key: ID
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionCreatedAt {
+  key: DateTime
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionName {
+  key: String
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionUpdatedAt {
+  key: DateTime
+  connection: PropertiesConnection
+}
+
+type PropertiesGroupBy {
+  _id: [PropertiesConnection_id]
+  createdAt: [PropertiesConnectionCreatedAt]
+  updatedAt: [PropertiesConnectionUpdatedAt]
+  name: [PropertiesConnectionName]
+}
+
+input PropertiesInput {
+  name: String
+  applications: [ID]
+}
+
 type Query {
   application(id: ID!): Application
   applications(sort: String, limit: Int, start: Int, where: JSON): [Application]
   applicationsConnection(sort: String, limit: Int, start: Int, where: JSON): ApplicationConnection
+  property(id: ID!): Properties
+  properties(sort: String, limit: Int, start: Int, where: JSON): [Properties]
+  propertiesConnection(sort: String, limit: Int, start: Int, where: JSON): PropertiesConnection
   vendor(id: ID!): Vendors
   vendors(sort: String, limit: Int, start: Int, where: JSON): [Vendors]
   vendorsConnection(sort: String, limit: Int, start: Int, where: JSON): VendorsConnection
@@ -213,6 +287,15 @@ input updateApplicationInput {
 
 type updateApplicationPayload {
   application: Application
+}
+
+input updatePropertiesInput {
+  where: InputID
+  data: PropertiesInput
+}
+
+type updatePropertiesPayload {
+  property: Properties
 }
 
 input updateRoleInput {
