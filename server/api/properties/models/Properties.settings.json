@@ -1,6 +1,6 @@
 {
   "connection": "default",
-  "collectionName": "",
+  "collectionName": "properties",
   "info": {
     "name": "properties",
     "description": ""
@@ -16,6 +16,24 @@
     "applications": {
       "collection": "application",
       "via": "properties"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "plugin": "upload",
+      "required": false
+    },
+    "phone": {
+      "default": "",
+      "type": "string"
+    },
+    "director": {
+      "default": "",
+      "type": "string"
+    },
+    "manager": {
+      "default": "",
+      "type": "string"
     }
   }
 }

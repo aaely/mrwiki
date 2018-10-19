@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Card,
-         Image,
-         Box,
-         Container,
-         Text,
-         Heading
-          } from 'gestalt';
 import Strapi from 'strapi-sdk-javascript/build/main';
 import Loader from './Loader';
 const apiUrl = process.env.API_URL || 'http://192.168.0.9:1337';
 const strapi = new Strapi(apiUrl);
 
-class Properties extends Component {
+class Props extends Component {
     state = {
         searchTerm: '',
         loadingItems: true,
@@ -22,21 +15,15 @@ class Properties extends Component {
 
     async componentDidMount() {
         try {
+            //console.log(this.props.match.params.itemId);
             const response = await strapi.request('POST', '/graphql', {
             data: {
                 query: `query {
                     property (id: "${this.props.match.params.propertyId}")  {
                     _id
                     name
-                    director
-                    manager
                     applications {
-                      _id
                       name
-                    }
-                    image {
-                        url
-                        name
                     }
                   }
                 }`
@@ -57,27 +44,21 @@ class Properties extends Component {
     render() {
         let { property, applications, loadingItems } = this.state;
         return(
-            <Container>
-                <Box
-                marginTop={5} marginBottom={5} justifyContent="center" display="flex"
-                >
-                <Heading size="lg" color="blue">{property}</Heading> <br />                
-                </Box>
-                <Box marginTop={5} marginBottom={5} display="flex" justifyContent="center">
-                    <Heading size="sm">Applications used by Property</Heading>
-                </Box>
+            <div style={{textAlign: 'center'}}>
+                <h1>Property</h1> <br />
+                <h4>{property}</h4> <br />
+                <h3>Applications used by Property</h3>
                 {applications.map(app => {
                     return(
-                        <Box display="flex" justifyContent="center">
-                            <Link to={`/apps/${app._id}`}>{app.name}</Link>
-                        </Box>
+                        <div>
+                            {app.name}
+                        </div>
                     );
                 })}
-                
-                {loadingItems && <Loader />}                
-            </Container>
+                {loadingItems && <Loader />}
+            </div>
         );
     }
 }
 
-export default Properties;
+export default Props;

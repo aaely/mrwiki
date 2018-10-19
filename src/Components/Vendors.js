@@ -72,7 +72,7 @@ class Vendors extends Component {
                     {applications.map(app => {
                         return(
                             <Box>
-                                {app.name}
+                                <Link to={`/apps/${app._id}`}>{app.name}</Link>
                             </Box>
                         );
                     })}

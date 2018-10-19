@@ -11,7 +11,8 @@ class Applications extends Component {
         loadingItems: true,
         application: '',
         properties: [],
-        vendor: ''
+        vendor: '',
+        vendorId: ''
     }
 
     async componentDidMount() {
@@ -40,6 +41,7 @@ class Applications extends Component {
             application: response.data.application.name,
             vendor: response.data.application.vendors.name,
             properties: response.data.application.properties,
+            vendorId: response.data.application.vendors._id,
             loadingItems: false
         });
         }catch (err) {
@@ -49,19 +51,18 @@ class Applications extends Component {
     }
 
     render() {
-        let { application, vendor, properties, loadingItems } = this.state;
+        let { application, vendor, properties, loadingItems, vendorId } = this.state;
         return(
             <div>
-                <h1>Application page</h1>
-                {application} <br />
-                {vendor}
+                <h1 style={{textAlign: 'center'}}>{application}</h1>
+                <Link to={`/vendors/${vendorId}`}><h3 style={{textAlign: 'center'}}>{vendor}</h3></Link>
                 <h3>
                     Properties that also utilize this app
                 </h3>
                 {properties.map(prop => {
                     return(
                         <div>
-                            {prop.name}
+                            <Link to={`/properties/${prop._id}`}>{prop.name}</Link>
                         </div>
                     );
                 })} 

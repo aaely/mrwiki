@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './Components/App';
 import registerServiceWorker, { unregister } from './serviceWorker';
+import './CSS/StyleSheet1.css'
 
 import "gestalt/dist/gestalt.css";
 

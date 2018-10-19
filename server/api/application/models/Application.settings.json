@@ -26,8 +26,8 @@
     },
     "properties": {
       "collection": "properties",
-      "via": "applications",
-      "dominant": true
+      "dominant": true,
+      "via": "applications"
     }
   }
 }

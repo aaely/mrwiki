@@ -171,7 +171,7 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON
 
-union Morph = Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | Properties | createPropertiesPayload | updatePropertiesPayload | deletePropertiesPayload | PropertiesConnection | PropertiesAggregator | PropertiesGroupBy | PropertiesConnection_id | PropertiesConnectionCreatedAt | PropertiesConnectionUpdatedAt | PropertiesConnectionName | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | Properties | createPropertiesPayload | updatePropertiesPayload | deletePropertiesPayload | PropertiesConnection | PropertiesAggregator | PropertiesGroupBy | PropertiesConnection_id | PropertiesConnectionCreatedAt | PropertiesConnectionUpdatedAt | PropertiesConnectionName | PropertiesConnectionImage | PropertiesConnectionPhone | PropertiesConnectionDirector | PropertiesConnectionManager | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createApplication(input: createApplicationInput): createApplicationPayload
@@ -203,6 +203,10 @@ type Properties {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String
+  image: UploadFile
+  phone: String
+  director: String
+  manager: String
   applications(sort: String, limit: Int, start: Int, where: JSON): [Application]
 }
 
@@ -226,7 +230,27 @@ type PropertiesConnectionCreatedAt {
   connection: PropertiesConnection
 }
 
+type PropertiesConnectionDirector {
+  key: String
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionImage {
+  key: ID
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionManager {
+  key: String
+  connection: PropertiesConnection
+}
+
 type PropertiesConnectionName {
+  key: String
+  connection: PropertiesConnection
+}
+
+type PropertiesConnectionPhone {
   key: String
   connection: PropertiesConnection
 }
@@ -241,11 +265,19 @@ type PropertiesGroupBy {
   createdAt: [PropertiesConnectionCreatedAt]
   updatedAt: [PropertiesConnectionUpdatedAt]
   name: [PropertiesConnectionName]
+  image: [PropertiesConnectionImage]
+  phone: [PropertiesConnectionPhone]
+  director: [PropertiesConnectionDirector]
+  manager: [PropertiesConnectionManager]
 }
 
 input PropertiesInput {
   name: String
   applications: [ID]
+  image: ID
+  phone: String
+  director: String
+  manager: String
 }
 
 type Query {
