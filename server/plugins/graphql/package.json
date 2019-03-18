@@ -1,26 +1,26 @@
 {
-  "_from": "strapi-plugin-graphql@alpha",
-  "_id": "strapi-plugin-graphql@3.0.0-alpha.14.3",
+  "_from": "strapi-plugin-graphql@3.0.0-alpha.24.1",
+  "_id": "strapi-plugin-graphql@3.0.0-alpha.24.1",
   "_inBundle": false,
-  "_integrity": "sha512-AEuKnyYYWPtVfruOLpqTN6BcnjEf4bg3mu4P8yMvfMS+TwOREK7uYcQpdedmkL3+KoST6mCoWPahqELYnlKquQ==",
+  "_integrity": "sha512-i7mG1br+u3crhbbexcWlfNSakD5BzrCQ/Rd6kV55nY6DKahrRyXlyMz3EDwHHppytynR3mJKQiN0WTEdTDFb4Q==",
   "_location": "/strapi-plugin-graphql",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "version",
     "registry": true,
-    "raw": "strapi-plugin-graphql@alpha",
+    "raw": "strapi-plugin-graphql@3.0.0-alpha.24.1",
     "name": "strapi-plugin-graphql",
     "escapedName": "strapi-plugin-graphql",
-    "rawSpec": "alpha",
+    "rawSpec": "3.0.0-alpha.24.1",
     "saveSpec": null,
-    "fetchSpec": "alpha"
+    "fetchSpec": "3.0.0-alpha.24.1"
   },
   "_requiredBy": [
     "#USER"
   ],
-  "_resolved": "https://registry.npmjs.org/strapi-plugin-graphql/-/strapi-plugin-graphql-3.0.0-alpha.14.3.tgz",
-  "_shasum": "6ab75ede1cdf9030f462bff2f96a0c57973db90a",
-  "_spec": "strapi-plugin-graphql@alpha",
+  "_resolved": "https://registry.npmjs.org/strapi-plugin-graphql/-/strapi-plugin-graphql-3.0.0-alpha.24.1.tgz",
+  "_shasum": "53e80a1d12090b82a1b28cccdf0c5c6f36b5fd8b",
+  "_spec": "strapi-plugin-graphql@3.0.0-alpha.24.1",
   "_where": "/home/aely/mrwiki/server",
   "author": {
     "name": "A Strapi developer"
@@ -28,21 +28,26 @@
   "bundleDependencies": false,
   "dependencies": {
     "apollo-server-koa": "^2.0.7",
+    "dataloader": "^1.4.0",
     "glob": "^7.1.3",
-    "graphql": "^0.13.2",
+    "graphql": "^14.0.2",
     "graphql-depth-limit": "^1.1.0",
     "graphql-playground-middleware-koa": "^1.6.4",
     "graphql-tools": "^3.1.1",
     "graphql-type-datetime": "^0.2.2",
     "graphql-type-json": "^0.2.1",
     "pluralize": "^7.0.0",
-    "strapi-utils": "3.0.0-alpha.14.3"
+    "strapi-utils": "3.0.0-alpha.24.1"
   },
   "deprecated": false,
   "description": "This is the description of the plugin.",
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "rimraf": "^2.6.3"
+  },
   "engines": {
-    "node": ">= 9.0.0",
-    "npm": ">= 5.3.0"
+    "node": ">= 10.0.0",
+    "npm": ">= 6.0.0"
   },
   "license": "MIT",
   "maintainers": [
@@ -53,15 +58,15 @@
   "name": "strapi-plugin-graphql",
   "scripts": {
     "analyze": "node ./node_modules/strapi-helper-plugin/lib/internals/scripts/analyze.js",
-    "analyze:clean": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/rimraf stats.json",
-    "build": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/cross-env NODE_ENV=production node node_modules/strapi-helper-plugin/node_modules/.bin/webpack --config node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.prod.babel.js --color -p --progress",
-    "build:clean": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/rimraf admin/build",
-    "build:dev": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/cross-env NODE_ENV=development node ./node_modules/strapi-helper-plugin/node_modules/.bin/webpack --config node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.prod.babel.js --color -p --progress",
+    "analyze:clean": "rimraf stats.json",
+    "build": "cross-env NODE_ENV=production node_modules/strapi-helper-plugin/node_modules/.bin/webpack --config node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.prod.babel.js --color -p --progress",
+    "build:clean": "rimraf admin/build",
+    "build:dev": "cross-env NODE_ENV=development ./node_modules/strapi-helper-plugin/node_modules/.bin/webpack --config node_modules/strapi-helper-plugin/lib/internals/webpack/webpack.prod.babel.js --color -p --progress",
     "generate": "node ./node_modules/plop/plop.js --plopfile node_modules/strapi-helper-plugin/lib/internals/generators/index.js",
     "preanalyze": "npm run analyze:clean",
     "prebuild": "npm run build:clean && npm run test",
     "prettier": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/prettier --single-quote --trailing-comma es5 --write \"{admin,__{tests,mocks}__}/**/*.js\"",
-    "start": "node ./node_modules/strapi-helper-plugin/node_modules/.bin/cross-env NODE_ENV=development node ./node_modules/strapi-helper-plugin/lib/server",
+    "start": "cross-env NODE_ENV=development ./node_modules/strapi-helper-plugin/lib/server",
     "test": "echo \"Error: no test specified\""
   },
   "strapi": {
@@ -69,5 +74,5 @@
     "icon": "plug",
     "description": "Description of graphql plugin."
   },
-  "version": "3.0.0-alpha.14.3"
+  "version": "3.0.0-alpha.24.1"
 }

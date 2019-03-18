@@ -5,16 +5,14 @@
       "connector": "strapi-hook-mongoose",
       "settings": {
         "client": "mongo",
-        "host": "ds231501.mlab.com",
-        "srv": false,
-        "port": "31501",
-        "database": "emaily-dev",
-        "username": "aaron",
-        "password": "password1"
+        "host": "${process.env.DATABASE_HOST || '127.0.0.1'}",
+        "port": "${process.env.DATABASE_PORT || 27017}",
+        "database": "${process.env.DATABASE_NAME || 'strapi'}",
+        "username": "${process.env.DATABASE_USERNAME || ''}",
+        "password": "${process.env.DATABASE_PASSWORD || ''}"
       },
       "options": {
-        "authenticationDatabase": "emaily-dev",
-        "ssl": false
+        "authenticationDatabase": "${process.env.DATABASE_AUTHENTICATION_DATABASE || ''}"
       }
     }
   }

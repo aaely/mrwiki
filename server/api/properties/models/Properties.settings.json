@@ -34,6 +34,14 @@
     "manager": {
       "default": "",
       "type": "string"
+    },
+    "playertracking": {
+      "default": "",
+      "type": "string"
+    },
+    "helpdesk": {
+      "default": "",
+      "type": "string"
     }
   }
 }

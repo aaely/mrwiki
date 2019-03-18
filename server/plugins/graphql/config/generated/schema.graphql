@@ -6,7 +6,9 @@ type Application {
   name: String!
   vendors: Vendors
   icon: UploadFile
+  departments: Departments
   properties(sort: String, limit: Int, start: Int, where: JSON): [Properties]
+  test(sort: String, limit: Int, start: Int, where: JSON): [Departments]
 }
 
 type ApplicationAggregator {
@@ -26,6 +28,11 @@ type ApplicationConnection_id {
 
 type ApplicationConnectionCreatedAt {
   key: DateTime
+  connection: ApplicationConnection
+}
+
+type ApplicationConnectionDepartments {
+  key: ID
   connection: ApplicationConnection
 }
 
@@ -56,6 +63,7 @@ type ApplicationGroupBy {
   name: [ApplicationConnectionName]
   vendors: [ApplicationConnectionVendors]
   icon: [ApplicationConnectionIcon]
+  departments: [ApplicationConnectionDepartments]
 }
 
 input ApplicationInput {
@@ -63,6 +71,8 @@ input ApplicationInput {
   vendors: ID
   icon: ID
   properties: [ID]
+  departments: ID
+  test: [ID]
 }
 
 input createApplicationInput {
@@ -71,6 +81,30 @@ input createApplicationInput {
 
 type createApplicationPayload {
   application: Application
+}
+
+input createDepartmentsInput {
+  data: DepartmentsInput
+}
+
+type createDepartmentsPayload {
+  department: Departments
+}
+
+input createEmployeesInput {
+  data: EmployeesInput
+}
+
+type createEmployeesPayload {
+  employee: Employees
+}
+
+input createJobtitleInput {
+  data: JobtitleInput
+}
+
+type createJobtitlePayload {
+  jobtitle: Jobtitle
 }
 
 input createPropertiesInput {
@@ -118,6 +152,30 @@ type deleteApplicationPayload {
   application: Application
 }
 
+input deleteDepartmentsInput {
+  where: InputID
+}
+
+type deleteDepartmentsPayload {
+  department: Departments
+}
+
+input deleteEmployeesInput {
+  where: InputID
+}
+
+type deleteEmployeesPayload {
+  employee: Employees
+}
+
+input deleteJobtitleInput {
+  where: InputID
+}
+
+type deleteJobtitlePayload {
+  jobtitle: Jobtitle
+}
+
 input deletePropertiesInput {
   where: InputID
 }
@@ -150,6 +208,206 @@ type deleteVendorsPayload {
   vendor: Vendors
 }
 
+type Departments {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String
+  managers(sort: String, limit: Int, start: Int, where: JSON): [Application]
+  directors(sort: String, limit: Int, start: Int, where: JSON): [Application]
+}
+
+type DepartmentsAggregator {
+  count: Int
+}
+
+type DepartmentsConnection {
+  values: [Departments]
+  groupBy: DepartmentsGroupBy
+  aggregate: DepartmentsAggregator
+}
+
+type DepartmentsConnection_id {
+  key: ID
+  connection: DepartmentsConnection
+}
+
+type DepartmentsConnectionCreatedAt {
+  key: DateTime
+  connection: DepartmentsConnection
+}
+
+type DepartmentsConnectionName {
+  key: String
+  connection: DepartmentsConnection
+}
+
+type DepartmentsConnectionUpdatedAt {
+  key: DateTime
+  connection: DepartmentsConnection
+}
+
+type DepartmentsGroupBy {
+  _id: [DepartmentsConnection_id]
+  createdAt: [DepartmentsConnectionCreatedAt]
+  updatedAt: [DepartmentsConnectionUpdatedAt]
+  name: [DepartmentsConnectionName]
+}
+
+input DepartmentsInput {
+  name: String
+  managers: [ID]
+  directors: [ID]
+}
+
+input editApplicationInput {
+  name: String
+  vendors: ID
+  icon: ID
+  properties: [ID]
+  departments: ID
+  test: [ID]
+}
+
+input editDepartmentsInput {
+  name: String
+  managers: [ID]
+  directors: [ID]
+}
+
+input editEmployeesInput {
+  fname: String
+  lname: String
+  extension: String
+  pnumber: String
+}
+
+input editFileInput {
+  name: String
+  hash: String
+  sha256: String
+  ext: String
+  mime: String
+  size: String
+  url: String
+  provider: String
+  public_id: String
+  related: [ID]
+}
+
+input editJobtitleInput {
+  title: String
+}
+
+input editPropertiesInput {
+  name: String
+  applications: [ID]
+  image: ID
+  phone: String
+  director: String
+  manager: String
+  playertracking: String
+  helpdesk: String
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+}
+
+input editVendorsInput {
+  name: String
+  applications: [ID]
+  phone: String
+  email: String
+}
+
+type Employees {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  fname: String
+  lname: String
+  extension: String
+  pnumber: String
+}
+
+type EmployeesAggregator {
+  count: Int
+}
+
+type EmployeesConnection {
+  values: [Employees]
+  groupBy: EmployeesGroupBy
+  aggregate: EmployeesAggregator
+}
+
+type EmployeesConnection_id {
+  key: ID
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionCreatedAt {
+  key: DateTime
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionExtension {
+  key: String
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionFname {
+  key: String
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionLname {
+  key: String
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionPnumber {
+  key: String
+  connection: EmployeesConnection
+}
+
+type EmployeesConnectionUpdatedAt {
+  key: DateTime
+  connection: EmployeesConnection
+}
+
+type EmployeesGroupBy {
+  _id: [EmployeesConnection_id]
+  createdAt: [EmployeesConnectionCreatedAt]
+  updatedAt: [EmployeesConnectionUpdatedAt]
+  fname: [EmployeesConnectionFname]
+  lname: [EmployeesConnectionLname]
+  extension: [EmployeesConnectionExtension]
+  pnumber: [EmployeesConnectionPnumber]
+}
+
+input EmployeesInput {
+  fname: String
+  lname: String
+  extension: String
+  pnumber: String
+}
+
 input FileInput {
   name: String!
   hash: String!
@@ -159,6 +417,7 @@ input FileInput {
   size: String!
   url: String!
   provider: String!
+  public_id: String
   related: [ID]
 }
 
@@ -166,17 +425,74 @@ input InputID {
   id: ID!
 }
 
+type Jobtitle {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String
+}
+
+type JobtitleAggregator {
+  count: Int
+}
+
+type JobtitleConnection {
+  values: [Jobtitle]
+  groupBy: JobtitleGroupBy
+  aggregate: JobtitleAggregator
+}
+
+type JobtitleConnection_id {
+  key: ID
+  connection: JobtitleConnection
+}
+
+type JobtitleConnectionCreatedAt {
+  key: DateTime
+  connection: JobtitleConnection
+}
+
+type JobtitleConnectionTitle {
+  key: String
+  connection: JobtitleConnection
+}
+
+type JobtitleConnectionUpdatedAt {
+  key: DateTime
+  connection: JobtitleConnection
+}
+
+type JobtitleGroupBy {
+  _id: [JobtitleConnection_id]
+  createdAt: [JobtitleConnectionCreatedAt]
+  updatedAt: [JobtitleConnectionUpdatedAt]
+  title: [JobtitleConnectionTitle]
+}
+
+input JobtitleInput {
+  title: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
 
-union Morph = Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | Properties | createPropertiesPayload | updatePropertiesPayload | deletePropertiesPayload | PropertiesConnection | PropertiesAggregator | PropertiesGroupBy | PropertiesConnection_id | PropertiesConnectionCreatedAt | PropertiesConnectionUpdatedAt | PropertiesConnectionName | PropertiesConnectionImage | PropertiesConnectionPhone | PropertiesConnectionDirector | PropertiesConnectionManager | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Application | createApplicationPayload | updateApplicationPayload | deleteApplicationPayload | ApplicationConnection | ApplicationAggregator | ApplicationGroupBy | ApplicationConnection_id | ApplicationConnectionCreatedAt | ApplicationConnectionUpdatedAt | ApplicationConnectionName | ApplicationConnectionVendors | ApplicationConnectionIcon | ApplicationConnectionDepartments | Departments | createDepartmentsPayload | updateDepartmentsPayload | deleteDepartmentsPayload | DepartmentsConnection | DepartmentsAggregator | DepartmentsGroupBy | DepartmentsConnection_id | DepartmentsConnectionCreatedAt | DepartmentsConnectionUpdatedAt | DepartmentsConnectionName | Employees | createEmployeesPayload | updateEmployeesPayload | deleteEmployeesPayload | EmployeesConnection | EmployeesAggregator | EmployeesGroupBy | EmployeesConnection_id | EmployeesConnectionCreatedAt | EmployeesConnectionUpdatedAt | EmployeesConnectionFname | EmployeesConnectionLname | EmployeesConnectionExtension | EmployeesConnectionPnumber | Jobtitle | createJobtitlePayload | updateJobtitlePayload | deleteJobtitlePayload | JobtitleConnection | JobtitleAggregator | JobtitleGroupBy | JobtitleConnection_id | JobtitleConnectionCreatedAt | JobtitleConnectionUpdatedAt | JobtitleConnectionTitle | Properties | createPropertiesPayload | updatePropertiesPayload | deletePropertiesPayload | PropertiesConnection | PropertiesAggregator | PropertiesGroupBy | PropertiesConnection_id | PropertiesConnectionCreatedAt | PropertiesConnectionUpdatedAt | PropertiesConnectionName | PropertiesConnectionImage | PropertiesConnectionPhone | PropertiesConnectionDirector | PropertiesConnectionManager | PropertiesConnectionPlayertracking | PropertiesConnectionHelpdesk | Vendors | createVendorsPayload | updateVendorsPayload | deleteVendorsPayload | VendorsConnection | VendorsAggregator | VendorsGroupBy | VendorsConnection_id | VendorsConnectionCreatedAt | VendorsConnectionUpdatedAt | VendorsConnectionName | VendorsConnectionPhone | VendorsConnectionEmail | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileGroupBy | UploadFileConnection_id | UploadFileConnectionCreatedAt | UploadFileConnectionUpdatedAt | UploadFileConnectionName | UploadFileConnectionHash | UploadFileConnectionSha256 | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionProvider | UploadFileConnectionPublic_id | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnection_id | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnection_id | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole
 
 type Mutation {
   createApplication(input: createApplicationInput): createApplicationPayload
   updateApplication(input: updateApplicationInput): updateApplicationPayload
   deleteApplication(input: deleteApplicationInput): deleteApplicationPayload
+  createDepartments(input: createDepartmentsInput): createDepartmentsPayload
+  updateDepartments(input: updateDepartmentsInput): updateDepartmentsPayload
+  deleteDepartments(input: deleteDepartmentsInput): deleteDepartmentsPayload
+  createEmployees(input: createEmployeesInput): createEmployeesPayload
+  updateEmployees(input: updateEmployeesInput): updateEmployeesPayload
+  deleteEmployees(input: deleteEmployeesInput): deleteEmployeesPayload
+  createJobtitle(input: createJobtitleInput): createJobtitlePayload
+  updateJobtitle(input: updateJobtitleInput): updateJobtitlePayload
+  deleteJobtitle(input: deleteJobtitleInput): deleteJobtitlePayload
   createProperties(input: createPropertiesInput): createPropertiesPayload
   updateProperties(input: updatePropertiesInput): updatePropertiesPayload
   deleteProperties(input: deletePropertiesInput): deletePropertiesPayload
@@ -192,8 +508,14 @@ type Mutation {
 
   """Delete an existing role"""
   deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
   createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
   updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
   deleteUser(input: deleteUserInput): deleteUserPayload
   upload(refId: ID, ref: String, source: String, file: Upload!): UploadFile!
 }
@@ -207,6 +529,8 @@ type Properties {
   phone: String
   director: String
   manager: String
+  playertracking: String
+  helpdesk: String
   applications(sort: String, limit: Int, start: Int, where: JSON): [Application]
 }
 
@@ -235,6 +559,11 @@ type PropertiesConnectionDirector {
   connection: PropertiesConnection
 }
 
+type PropertiesConnectionHelpdesk {
+  key: String
+  connection: PropertiesConnection
+}
+
 type PropertiesConnectionImage {
   key: ID
   connection: PropertiesConnection
@@ -255,6 +584,11 @@ type PropertiesConnectionPhone {
   connection: PropertiesConnection
 }
 
+type PropertiesConnectionPlayertracking {
+  key: String
+  connection: PropertiesConnection
+}
+
 type PropertiesConnectionUpdatedAt {
   key: DateTime
   connection: PropertiesConnection
@@ -269,6 +603,8 @@ type PropertiesGroupBy {
   phone: [PropertiesConnectionPhone]
   director: [PropertiesConnectionDirector]
   manager: [PropertiesConnectionManager]
+  playertracking: [PropertiesConnectionPlayertracking]
+  helpdesk: [PropertiesConnectionHelpdesk]
 }
 
 input PropertiesInput {
@@ -278,12 +614,23 @@ input PropertiesInput {
   phone: String
   director: String
   manager: String
+  playertracking: String
+  helpdesk: String
 }
 
 type Query {
   application(id: ID!): Application
   applications(sort: String, limit: Int, start: Int, where: JSON): [Application]
   applicationsConnection(sort: String, limit: Int, start: Int, where: JSON): ApplicationConnection
+  department(id: ID!): Departments
+  departments(sort: String, limit: Int, start: Int, where: JSON): [Departments]
+  departmentsConnection(sort: String, limit: Int, start: Int, where: JSON): DepartmentsConnection
+  employee(id: ID!): Employees
+  employees(sort: String, limit: Int, start: Int, where: JSON): [Employees]
+  employeesConnection(sort: String, limit: Int, start: Int, where: JSON): EmployeesConnection
+  jobtitle(id: ID!): Jobtitle
+  jobtitles(sort: String, limit: Int, start: Int, where: JSON): [Jobtitle]
+  jobtitlesConnection(sort: String, limit: Int, start: Int, where: JSON): JobtitleConnection
   property(id: ID!): Properties
   properties(sort: String, limit: Int, start: Int, where: JSON): [Properties]
   propertiesConnection(sort: String, limit: Int, start: Int, where: JSON): PropertiesConnection
@@ -302,6 +649,7 @@ type Query {
   user(id: ID!): UsersPermissionsUser
   users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
   usersConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsUserConnection
+  me: UsersPermissionsMe
 }
 
 input RoleInput {
@@ -314,16 +662,43 @@ input RoleInput {
 
 input updateApplicationInput {
   where: InputID
-  data: ApplicationInput
+  data: editApplicationInput
 }
 
 type updateApplicationPayload {
   application: Application
 }
 
+input updateDepartmentsInput {
+  where: InputID
+  data: editDepartmentsInput
+}
+
+type updateDepartmentsPayload {
+  department: Departments
+}
+
+input updateEmployeesInput {
+  where: InputID
+  data: editEmployeesInput
+}
+
+type updateEmployeesPayload {
+  employee: Employees
+}
+
+input updateJobtitleInput {
+  where: InputID
+  data: editJobtitleInput
+}
+
+type updateJobtitlePayload {
+  jobtitle: Jobtitle
+}
+
 input updatePropertiesInput {
   where: InputID
-  data: PropertiesInput
+  data: editPropertiesInput
 }
 
 type updatePropertiesPayload {
@@ -332,7 +707,7 @@ type updatePropertiesPayload {
 
 input updateRoleInput {
   where: InputID
-  data: RoleInput
+  data: editRoleInput
 }
 
 type updateRolePayload {
@@ -341,7 +716,7 @@ type updateRolePayload {
 
 input updateUserInput {
   where: InputID
-  data: UserInput
+  data: editUserInput
 }
 
 type updateUserPayload {
@@ -350,17 +725,14 @@ type updateUserPayload {
 
 input updateVendorsInput {
   where: InputID
-  data: VendorsInput
+  data: editVendorsInput
 }
 
 type updateVendorsPayload {
   vendor: Vendors
 }
 
-"""
-The `Upload` scalar type represents a file upload promise that resolves an
-object containing `stream`, `filename`, `mimetype` and `encoding`.
-"""
+"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type UploadFile {
@@ -375,6 +747,7 @@ type UploadFile {
   size: String!
   url: String!
   provider: String!
+  public_id: String
   related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
 }
 
@@ -423,6 +796,11 @@ type UploadFileConnectionProvider {
   connection: UploadFileConnection
 }
 
+type UploadFileConnectionPublic_id {
+  key: String
+  connection: UploadFileConnection
+}
+
 type UploadFileConnectionSha256 {
   key: String
   connection: UploadFileConnection
@@ -455,14 +833,34 @@ type UploadFileGroupBy {
   size: [UploadFileConnectionSize]
   url: [UploadFileConnectionUrl]
   provider: [UploadFileConnectionProvider]
+  public_id: [UploadFileConnectionPublic_id]
 }
 
 input UserInput {
   username: String!
   email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
   confirmed: Boolean
   blocked: Boolean
   role: ID
+}
+
+type UsersPermissionsMe {
+  _id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  _id: ID!
+  name: String!
+  description: String
+  type: String
 }
 
 type UsersPermissionsPermission {
@@ -525,6 +923,7 @@ type UsersPermissionsUser {
   _id: ID!
   username: String!
   email: String!
+  provider: String
   confirmed: Boolean
   blocked: Boolean
   role: UsersPermissionsRole
@@ -560,6 +959,11 @@ type UsersPermissionsUserConnectionEmail {
   connection: UsersPermissionsUserConnection
 }
 
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
 type UsersPermissionsUserConnectionRole {
   key: ID
   connection: UsersPermissionsUserConnection
@@ -574,6 +978,7 @@ type UsersPermissionsUserGroupBy {
   _id: [UsersPermissionsUserConnection_id]
   username: [UsersPermissionsUserConnectionUsername]
   email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
   confirmed: [UsersPermissionsUserConnectionConfirmed]
   blocked: [UsersPermissionsUserConnectionBlocked]
   role: [UsersPermissionsUserConnectionRole]

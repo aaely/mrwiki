@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path');
-const exec = require('child_process').spawnSync;
+const shell = require('shelljs');
 const _ = require('lodash');
 
 /**
@@ -28,8 +28,7 @@ module.exports = {
 
   getGaConfig: async ctx => {
     try {
-      const allowGa = _.get(strapi.config, 'info.customs.allowGa', true);
-      ctx.send({ allowGa });
+      ctx.send({ uuid: _.get(strapi.config, 'uuid', false) });
     } catch(err) {
       ctx.badRequest(null, [{ messages: [{ id: 'An error occurred' }] }]);
     }
@@ -53,7 +52,7 @@ module.exports = {
       strapi.reload.isWatching = false;
 
       strapi.log.info(`Installing ${plugin}...`);
-      exec('node', [strapiBin, 'install', plugin, (port === '4000') ? '--dev' : '']);
+      shell.exec(`node ${strapiBin} install ${plugin} ${(port === '4000') ? '--dev' : ''}`, {silent: true});
 
       ctx.send({ ok: true });
 
@@ -86,7 +85,7 @@ module.exports = {
       strapi.reload.isWatching = false;
 
       strapi.log.info(`Uninstalling ${plugin}...`);
-      exec('node', [strapiBin, 'uninstall', plugin]);
+      shell.exec(`node ${strapiBin} uninstall ${plugin}`, {silent: true});
 
       ctx.send({ ok: true });
 

@@ -1,0 +1,29 @@
+{
+  "connection": "default",
+  "collectionName": "",
+  "info": {
+    "name": "employees",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "fname": {
+      "default": "",
+      "type": "string"
+    },
+    "lname": {
+      "default": "",
+      "type": "string"
+    },
+    "extension": {
+      "default": "",
+      "type": "string"
+    },
+    "pnumber": {
+      "default": "",
+      "type": "string"
+    }
+  }
+}

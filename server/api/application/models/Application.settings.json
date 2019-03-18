@@ -28,6 +28,14 @@
       "collection": "properties",
       "dominant": true,
       "via": "applications"
+    },
+    "departments": {
+      "model": "departments",
+      "via": "managers"
+    },
+    "test": {
+      "collection": "departments",
+      "via": "directors"
     }
   }
 }
